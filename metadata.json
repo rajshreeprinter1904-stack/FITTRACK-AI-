@@ -1,0 +1,8 @@
+{
+  "name": "Remix FITTRACK AI",
+  "description": "Track Every Day. Transform Your Life. AI-powered fitness coach, daily activity tracker, workout logger, nutrition planner, and body transformation assistant.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

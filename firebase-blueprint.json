@@ -1,0 +1,557 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User fitness profile, onboarding attributes, and calculated daily targets.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner Firebase Auth UID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name of the user.",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "age": {
+          "type": "number",
+          "description": "User age in years (13-120)."
+        },
+        "gender": {
+          "type": "string",
+          "description": "Optional gender selection.",
+          "enum": ["male", "female", "non_binary", "prefer_not_to_say"],
+          "maxLength": 30
+        },
+        "heightCm": {
+          "type": "number",
+          "description": "User height in centimeters."
+        },
+        "currentWeightKg": {
+          "type": "number",
+          "description": "Current body weight in kilograms."
+        },
+        "targetWeightKg": {
+          "type": "number",
+          "description": "Target body weight in kilograms."
+        },
+        "fitnessLevel": {
+          "type": "string",
+          "description": "Experience level.",
+          "enum": ["beginner", "intermediate", "advanced"],
+          "maxLength": 20
+        },
+        "fitnessGoal": {
+          "type": "string",
+          "description": "Primary transformation goal.",
+          "enum": ["lose_weight", "build_muscle", "endurance", "recomp", "wellness"],
+          "maxLength": 30
+        },
+        "workoutPreference": {
+          "type": "string",
+          "description": "Preferred training environment.",
+          "enum": ["gym", "home", "outdoor", "hybrid"],
+          "maxLength": 20
+        },
+        "equipment": {
+          "type": "array",
+          "description": "Bounded list of available equipment tags (max 12)."
+        },
+        "dietaryPreference": {
+          "type": "string",
+          "description": "Nutrition style.",
+          "enum": ["balanced", "high_protein", "vegetarian", "vegan", "keto", "mediterranean"],
+          "maxLength": 30
+        },
+        "dailyCalorieGoal": {
+          "type": "number",
+          "description": "Target daily calorie intake."
+        },
+        "dailyProteinGoalG": {
+          "type": "number",
+          "description": "Target daily protein in grams."
+        },
+        "dailyCarbsGoalG": {
+          "type": "number",
+          "description": "Target daily carbohydrates in grams."
+        },
+        "dailyFatGoalG": {
+          "type": "number",
+          "description": "Target daily fat in grams."
+        },
+        "dailyStepsGoal": {
+          "type": "number",
+          "description": "Target daily step count."
+        },
+        "dailyWaterGoalMl": {
+          "type": "number",
+          "description": "Target daily water intake in milliliters."
+        },
+        "dailySleepGoalHours": {
+          "type": "number",
+          "description": "Target daily sleep duration in hours."
+        },
+        "dailyActiveMinutesGoal": {
+          "type": "number",
+          "description": "Target daily active minutes."
+        },
+        "onboardingCompleted": {
+          "type": "boolean",
+          "description": "Whether initial onboarding has been finished."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp."
+        }
+      },
+      "required": [
+        "userId",
+        "name",
+        "age",
+        "gender",
+        "heightCm",
+        "currentWeightKg",
+        "targetWeightKg",
+        "fitnessLevel",
+        "fitnessGoal",
+        "workoutPreference",
+        "equipment",
+        "dietaryPreference",
+        "dailyCalorieGoal",
+        "dailyProteinGoalG",
+        "dailyCarbsGoalG",
+        "dailyFatGoalG",
+        "dailyStepsGoal",
+        "dailyWaterGoalMl",
+        "dailySleepGoalHours",
+        "dailyActiveMinutesGoal",
+        "onboardingCompleted",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "UserPrivateInfo": {
+      "title": "UserPrivateInfo",
+      "description": "Isolated PII record for the user account.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "minLength": 3,
+          "maxLength": 254
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["userId", "email", "createdAt", "updatedAt"]
+    },
+    "DailyLog": {
+      "title": "DailyLog",
+      "description": "Daily activity, hydration, sleep, and manual vitals check-in.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "dateKey": {
+          "type": "string",
+          "description": "YYYY-MM-DD date identifier.",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "steps": {
+          "type": "number",
+          "description": "Manually logged or imported daily step count."
+        },
+        "distanceKm": {
+          "type": "number",
+          "description": "Distance covered in kilometers."
+        },
+        "caloriesBurned": {
+          "type": "number",
+          "description": "Active calories burned."
+        },
+        "activeMinutes": {
+          "type": "number",
+          "description": "Total active minutes."
+        },
+        "waterMl": {
+          "type": "number",
+          "description": "Total water intake in milliliters."
+        },
+        "sleepHours": {
+          "type": "number",
+          "description": "Sleep duration in hours."
+        },
+        "sleepQuality": {
+          "type": "string",
+          "enum": ["poor", "fair", "good", "excellent"],
+          "maxLength": 20
+        },
+        "bedTime": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 10
+        },
+        "wakeTime": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 10
+        },
+        "restingHeartRateBpm": {
+          "type": "number",
+          "description": "Manually logged resting heart rate in BPM (0 if not entered)."
+        },
+        "fitnessScore": {
+          "type": "number",
+          "description": "Computed daily adherence score (0-100)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "userId",
+        "dateKey",
+        "steps",
+        "distanceKm",
+        "caloriesBurned",
+        "activeMinutes",
+        "waterMl",
+        "sleepHours",
+        "sleepQuality",
+        "bedTime",
+        "wakeTime",
+        "restingHeartRateBpm",
+        "fitnessScore",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "WorkoutEntry": {
+      "title": "WorkoutEntry",
+      "description": "Logged workout or cardio session.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "dateKey": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["gym", "home", "cardio", "running_walking", "cycling", "yoga"],
+          "maxLength": 30
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "durationMin": {
+          "type": "number"
+        },
+        "caloriesBurned": {
+          "type": "number"
+        },
+        "distanceKm": {
+          "type": "number"
+        },
+        "sets": {
+          "type": "number"
+        },
+        "reps": {
+          "type": "number"
+        },
+        "weightKg": {
+          "type": "number"
+        },
+        "exercisesSummary": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 1000
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "userId",
+        "dateKey",
+        "category",
+        "title",
+        "durationMin",
+        "caloriesBurned",
+        "distanceKm",
+        "sets",
+        "reps",
+        "weightKg",
+        "exercisesSummary",
+        "notes",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "MealEntry": {
+      "title": "MealEntry",
+      "description": "Logged meal or food item with calories and macronutrients.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "dateKey": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "mealType": {
+          "type": "string",
+          "enum": ["breakfast", "lunch", "dinner", "snack"],
+          "maxLength": 20
+        },
+        "foodName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "servingSize": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "calories": {
+          "type": "number"
+        },
+        "proteinG": {
+          "type": "number"
+        },
+        "carbsG": {
+          "type": "number"
+        },
+        "fatG": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "userId",
+        "dateKey",
+        "mealType",
+        "foodName",
+        "servingSize",
+        "calories",
+        "proteinG",
+        "carbsG",
+        "fatG",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "BodyMeasurement": {
+      "title": "BodyMeasurement",
+      "description": "Body weight, composition, and circumference check-in.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "dateKey": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "weightKg": {
+          "type": "number"
+        },
+        "bodyFatPct": {
+          "type": "number"
+        },
+        "bmi": {
+          "type": "number"
+        },
+        "chestCm": {
+          "type": "number"
+        },
+        "waistCm": {
+          "type": "number"
+        },
+        "hipCm": {
+          "type": "number"
+        },
+        "armCm": {
+          "type": "number"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 300
+        },
+        "localPhotoId": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "userId",
+        "dateKey",
+        "weightKg",
+        "bodyFatPct",
+        "bmi",
+        "chestCm",
+        "waistCm",
+        "hipCm",
+        "armCm",
+        "note",
+        "localPhotoId",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "ReminderSetting": {
+      "title": "ReminderSetting",
+      "description": "User notification and reminder schedule item.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["workout", "water", "meal", "sleep", "goal", "motivation"],
+          "maxLength": 20
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "time24h": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 5,
+          "pattern": "^[0-9]{2}:[0-9]{2}$"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["userId", "category", "label", "time24h", "enabled", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Primary user fitness profile and targets."
+    },
+    "/users/{userId}/private/{docId}": {
+      "schema": { "$ref": "#/entities/UserPrivateInfo" },
+      "description": "Isolated PII storage for user email."
+    },
+    "/users/{userId}/dailyLogs/{logId}": {
+      "schema": { "$ref": "#/entities/DailyLog" },
+      "description": "Daily fitness, hydration, sleep, and step tracking documents."
+    },
+    "/users/{userId}/workouts/{workoutId}": {
+      "schema": { "$ref": "#/entities/WorkoutEntry" },
+      "description": "Logged workout and cardio sessions."
+    },
+    "/users/{userId}/meals/{mealId}": {
+      "schema": { "$ref": "#/entities/MealEntry" },
+      "description": "Logged meals and macronutrient entries."
+    },
+    "/users/{userId}/measurements/{measurementId}": {
+      "schema": { "$ref": "#/entities/BodyMeasurement" },
+      "description": "Historical body weight and anthropometric check-ins."
+    },
+    "/users/{userId}/reminders/{reminderId}": {
+      "schema": { "$ref": "#/entities/ReminderSetting" },
+      "description": "Configured daily reminders and notification toggles."
+    }
+  }
+}
